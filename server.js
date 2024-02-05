@@ -16,7 +16,7 @@ const connectionStringURI = `mongodb://127.0.0.1:27017`;
 const client = new MongoClient(connectionStringURI);
 
 // Declare a variable to hold the connection
-let db;
+// let db;
 
 // Create variable to hold our database name
 const dbName = 'socialNetwork';
@@ -39,7 +39,7 @@ client.connect()
 
 // Built in Express function that parses incoming requests to JSON
 app.use(express.json());
-// app.use(routes);
+app.use(routes);
 
 
 app.get('/read', (req, res) => {

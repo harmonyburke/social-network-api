@@ -61,16 +61,75 @@ module.exports= {
             res.status(500).json(err);
         }
     },
+    // add a friend
     async addFriend(req, res){
         try{
-            const user=await User.findOneAndUpdate(
+            const user=await Users.findOneAndUpdate(
                 {_id:req.params.userID},
                 {$addToSet: {friends: req.body}},
                 {runValidators: true}
             );
+            return res.status(200).json(user);
         }catch (err) {
             console.log(err);
             res.status(500).json(err)
         }
     },
-}
+    // delete friend
+    async deleteFriend(req, res) {
+        try{
+            const user=await Users.findOneAndRemove(
+                {_id:req.params.userID},
+                { $pull: {friends:req.body}},
+                { runValidators:true}
+            );
+            return res.status(200).json(user)
+        }catch (err) {
+            console.log(err);
+            res.status(500).json(err)
+        };
+    },
+    // create new thought
+    async addThought(req,res){
+        try{
+            const user=await Users.findOneAndUpdate(
+                {_id:req.params.userID},
+                { $addToSet:{thoughts:req.body}},
+                { runValidators:true}
+            );
+            return res.status(200).json(user);
+        }catch (err) {
+            console.log(err);
+            res.status(500).json(err)
+        };
+    },
+    // edit a thought
+    async editThought(req, res){
+        try{
+            const thought=await Users.findOneAndUpdate(
+                {_id:req.params.userID},
+                { $set: {thoughts:req.body.post}},
+                { runValidators:true}
+            );
+            return res.status(200).json(thought);
+        }catch (err) {
+            console.log(err);
+            res.status(500).json(err)
+        };
+    },
+
+    // delete a thought
+    async deleteThought(req,res){
+        try{
+            const thought=await Users.findOneAndRemove(
+                {_id:req.params.userID},
+                { $pull: {thoughts:req.body.postID}},
+                { runValidators:true}
+            );
+            return res.status(200).json(thought);
+        }catch (err) {
+            console.log(err);
+            res.status(500).json(err)
+        }
+    }
+};

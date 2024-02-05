@@ -6,7 +6,11 @@ const thoughtSchema= new Schema(
             type: String,
             required:true,
             max_length: 100,
-        }
+        },
+        postID:{
+            type: Number,
+            required:true
+        },
     }
 );
 
