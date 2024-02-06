@@ -6,7 +6,14 @@ const userSchema= new Schema (
         username : {
             type: String,
             required: true,
-            max_length:50
+            unique:true,
+            trimmed:true
+        },
+        email:{
+            type: String,
+            unique: true,
+            required:true,
+            runValidators:true
         },
         userID:{
             type: Number,
@@ -22,6 +29,11 @@ const userSchema= new Schema (
             ref:'thoughts'
         }]
     },
+    {
+        toJSON: {
+            virtuals:true
+        }
+    }
 
 );
 

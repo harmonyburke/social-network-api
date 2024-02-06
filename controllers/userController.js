@@ -36,6 +36,16 @@ module.exports= {
         }
     },
 
+    // update user
+    async updateUser (req, res) {
+        try{
+            const user=await Users.findOneAndUpdate(req.body);
+            res.json(user);
+        }catch (err) {
+            res.status(500).json(err);
+        }
+    },
+
     // create new user
     async createUser (req, res) {
         try {
@@ -66,8 +76,8 @@ module.exports= {
         try{
             const user=await Users.findOneAndUpdate(
                 {_id:req.params.userID},
-                // {$addToSet: {friends: req.body}},
-                {runValidators: true}
+                {$addToSet: {friends: req.params.friendId}},
+                {runValidators: true, new: true}
             );
             return res.status(200).json(user);
         }catch (err) {
@@ -78,58 +88,15 @@ module.exports= {
     // delete friend
     async deleteFriend(req, res) {
         try{
-            const user=await Users.findOneAndRemove(
+            const user=await Users.findOneAndUpdate(
                 {_id:req.params.userID},
-                // { $pull: {friends:req.body}},
-                { runValidators:true}
+                { $pull: {friends:req.params.friendId}},
+                { runValidators:true, new:true}
             );
             return res.status(200).json(user)
         }catch (err) {
             console.log(err);
             res.status(500).json(err)
         };
-    },
-    // create new thought
-    async addThought(req,res){
-        try{
-            const user=await Users.findOneAndUpdate(
-                {_id:req.params.userID},
-                { $addToSet:{thoughts:req.body}},
-                { runValidators:true}
-            );
-            return res.status(200).json(user);
-        }catch (err) {
-            console.log(err);
-            res.status(500).json(err)
-        };
-    },
-    // edit a thought
-    async editThought(req, res){
-        try{
-            const thought=await Users.findOneAndUpdate(
-                {_id:req.params.userID},
-                { $set: {thoughts:req.body.post}},
-                { runValidators:true}
-            );
-            return res.status(200).json(thought);
-        }catch (err) {
-            console.log(err);
-            res.status(500).json(err)
-        };
-    },
-
-    // delete a thought
-    async deleteThought(req,res){
-        try{
-            const thought=await Users.findOneAndRemove(
-                {_id:req.params.userID},
-                { $pull: {thoughts:req.body.postID}},
-                { runValidators:true}
-            );
-            return res.status(200).json(thought);
-        }catch (err) {
-            console.log(err);
-            res.status(500).json(err)
-        }
     }
 };
