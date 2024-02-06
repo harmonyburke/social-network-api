@@ -18,6 +18,8 @@ To install this application, run npm install to install all relevant packages in
 
 To use this application, run npm start and follow the routes using insomnia.
 
+To see this API in action, click here: https://drive.google.com/file/d/1til2bPabpT3AKjC4YV1X1efaX-HkoQf-/view?usp=sharing
+
 ## Credits
 
 I used the module 18 coursework, as well as the documentation for MongoDB for help with this project.
