@@ -7,9 +7,9 @@ const thoughtSchema= new Schema(
             required:true,
             max_length: 100,
         },
-        postID:{
-            type: Number,
-            required:true
+        username: {
+            type: String,
+            required: true
         },
     }
 );

@@ -1,5 +1,4 @@
 const {Schema, model} =require ('mongoose');
-const friendSchema=require('./Friends');
 const thoughtSchema=require('./Thoughts');
 
 const userSchema= new Schema (
@@ -13,9 +12,15 @@ const userSchema= new Schema (
             type: Number,
             required: true
         },
-        friends : [friendSchema],
+        friends : [{
+            type: Schema.Types.ObjectId,
+            ref: 'users'
+        }],
 
-        thoughts: [thoughtSchema]
+        thoughts: [{
+            type: Schema.Types.ObjectId,
+            ref:'thoughts'
+        }]
     },
 
 );

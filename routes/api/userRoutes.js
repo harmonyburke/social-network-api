@@ -13,3 +13,5 @@ const {
 
 // get all users and create a new user
 router.route('/').get(allUsers).post(createUser);
+
+module.exports=router;

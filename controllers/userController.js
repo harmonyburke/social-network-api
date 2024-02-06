@@ -1,5 +1,5 @@
 const {ObjectId} =require('mongoose').Types;
-const {Users, Friends, Thoughts}=require('../models');
+const {Users, Thoughts}=require('../models');
 
 module.exports= {
 
@@ -28,7 +28,7 @@ module.exports= {
             res.json({
                 user,
                 thoughts: await Thoughts(req.params.userID),
-                friends: await Users(req.params.friends)
+                // friends: await Users(req.params.friends)
             })
         } catch (err) {
             console.log(err);
@@ -39,7 +39,7 @@ module.exports= {
     // create new user
     async createUser (req, res) {
         try {
-            const user =await User.create(req.body);
+            const user =await Users.create(req.body);
             res.json(user);
         } catch (err) {
             res.status(500).json(err)
@@ -49,7 +49,7 @@ module.exports= {
     // delete user 
     async deleteUser (req, res) {
         try {
-            const user= await User.findOneAndRemove ({_id:req.params.userID});
+            const user= await Users.findOneAndRemove ({_id:req.params.userID});
 
             if(!user) {
                 return res.status(404).json({ message: 'No user found.'});
@@ -66,7 +66,7 @@ module.exports= {
         try{
             const user=await Users.findOneAndUpdate(
                 {_id:req.params.userID},
-                {$addToSet: {friends: req.body}},
+                // {$addToSet: {friends: req.body}},
                 {runValidators: true}
             );
             return res.status(200).json(user);
@@ -80,7 +80,7 @@ module.exports= {
         try{
             const user=await Users.findOneAndRemove(
                 {_id:req.params.userID},
-                { $pull: {friends:req.body}},
+                // { $pull: {friends:req.body}},
                 { runValidators:true}
             );
             return res.status(200).json(user)
